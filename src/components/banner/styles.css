@@ -1,0 +1,25 @@
+.banner {
+  background-color: #133A6F;
+  color: #fff;
+  padding: 0.25rem;
+  width: 300px;
+  font-size: 12px;
+  position: relative;
+  border-radius: 0.5rem 0 0 0.5rem ;
+}
+
+.ribbon {
+  width: 0; 
+  height: 0; 
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent; 
+  
+  border-right: 14px solid #fff;
+  position: absolute;
+  right: 0;
+  top: 0; 
+}
+
+.ribbon-active {
+  border-right: 14px solid #F4FBF9;
+}
