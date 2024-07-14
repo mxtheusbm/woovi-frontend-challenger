@@ -1,72 +1,91 @@
-import { Box, Button, Container, FormControl, RadioGroup, Typography } from '@mui/material'
-import { Header } from '../components/header'
-import { ChangeEvent, useState } from 'react';
-import { InputRadio } from '../components/inputRadio';
-import { data } from '../utils/paymentMock'
+import { Box, Button, Container, FormControl, RadioGroup, Typography, Stack } from '@mui/material';
+import { Header } from '../components/header';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Charge, data } from '../utils/paymentMock';
 import { Footer } from '../components/footer';
-import { Banner } from '../components/banner';
 import { NavLink } from 'react-router-dom';
+import { InputRadio } from '../components/inputRadio';
 import { formatNumberToBR } from '../utils/formatNumberToBR';
+import { Banner } from '../components/banner';
 
 export const Payment = () => {
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('1');
+  const [charge, setCharge] = useState<Charge>()
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedPaymentMethod((event.target as HTMLInputElement).value);
   };
+
+  useEffect(() => {
+    // request
+    setCharge(data)
+  }, [])
+
+  console.log(charge)
   
   return (
     <Container maxWidth="xs">
-      <Header title='João, como você quer pagar?'/>
+      <Header title={`${charge?.customer.name}, como você quer pagar?`}/>
 
       <FormControl fullWidth>
         <RadioGroup
-          name="selected-payment-method"
+          name="select-payment-method"
           value={selectedPaymentMethod}
           onChange={handleChange}
         >
-          {data.map((option, index) => (
-            <InputRadio 
-              key={option.parcel}
-              label={
-                <div style={{ width: '100%' }}>
-                  <Typography variant='h5'><strong>{option.parcel}x</strong> R$ {formatNumberToBR(option.parcelValue)}</Typography>
-                  {index !== 0 && <Typography color='#AFAFAF'>Total: R$ {formatNumberToBR(option.total)}</Typography>}
-                  {index === 0 && <Typography color='primary'>Ganhe 3% de Cashback</Typography>}
-                  {index === 0 && (
-                    <Banner>
-                      <Box>
-                        <Typography variant='body2'>
-                          🤑 R$ <strong>300,00</strong> de volta no seu Pix na hora
-                        </Typography>
-                        <div className={`ribbon ${selectedPaymentMethod == option.parcel.toString() ? 'ribbon-active' : ''}` }></div>
-                      </Box>
-                    </Banner>
-                  )}
-                  {index === 3 && (
-                    <Banner>
-                      <Box>
-                        <Typography variant='body2'>
-                          <strong>-3% de juros:</strong> Melhor opção
-                        </Typography>
-                        <div className={`ribbon ${selectedPaymentMethod == option.parcel.toString() ? 'ribbon-active' : ''}` }></div>
-                      </Box>
-                    </Banner>
-                    
-                  )}
-                </div>
-              }
-              selectedValue={selectedPaymentMethod}
-              value={option.parcel.toString()}
-              index={index} 
-            />
-          ))}
+          <InputRadio
+            selectedValue={selectedPaymentMethod}
+            value={data.value.toString()}
+            isDetached 
+            label={
+              <Box>
+                <Typography variant='h5' fontWeight='600'>
+                  <Typography display='inline' variant='h5' fontWeight='800'>1x</Typography> R$ {formatNumberToBR(data.value)}
+                </Typography>
+
+                <Typography color='primary' fontWeight='600'>Ganhe <Typography color='primary' display='inline' fontWeight='800'>3%</Typography> de Cashback</Typography>
+
+                <Banner>
+                  <Box>
+                    <Typography color='#FFFFFF' variant='body2' fontWeight='600'>
+                      🤑 <Typography display='inline' color='#FFFFFF' variant='body2' fontWeight='800'>R$ 300,00</Typography> de volta no seu Pix na hora
+                    </Typography>
+                    <div className={`ribbon ${selectedPaymentMethod == data.value.toString() ? 'ribbon-active' : ''}` }></div>
+                  </Box>
+                </Banner>
+              </Box>
+            } 
+          />
+
+          <Stack 
+            sx={{ 
+              marginTop: '2rem' 
+            }}
+          >
+            {data.installments.map((installment, index) => (
+              <InputRadio 
+                key={installment.number}
+                label={
+                  <div style={{ width: '100%' }}>
+                    <Typography variant='h5' fontWeight='600'>
+                      <Typography display='inline' variant='h5' fontWeight='800'>{installment.number}x</Typography> R$ {formatNumberToBR(installment.value / installment.number)}
+                    </Typography>
+                    <Typography color='#AFAFAF'>Total: R$ {formatNumberToBR(installment.value)}</Typography>
+                  </div>
+                }
+                selectedValue={selectedPaymentMethod}
+                value={installment.value.toString()}
+                index={index}
+                maxInstallmentNumber={data.installments.length - 1} 
+              />
+            ))}
+          </Stack>
         </RadioGroup>
       </FormControl>
 
       <Footer>
         <NavLink to={`/payment/${selectedPaymentMethod}/qrcode`}>
-          <Button variant='contained' fullWidth>Continuar</Button>
+          <Button variant='contained' color='secondary' fullWidth>Continuar</Button>
         </NavLink>
       </Footer>
     </Container>

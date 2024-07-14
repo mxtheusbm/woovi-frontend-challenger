@@ -5,17 +5,11 @@
 }
 
 body {
-  color: #4D4D4D;
   font-family: 'Nunito', sans-serif;
 }
 
-button {
-  color: #FFF !important;
-  font-weight: 600 !important;
+form {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
 }
-
- form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
- }
