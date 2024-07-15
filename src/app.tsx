@@ -1,9 +1,10 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import { Payment } from "./pages/payment"
 import { ThemeProvider } from "@mui/material";
-import { PaymentQrcode } from "./pages/paymentQRcode";
-import { PaymentCreditCard } from "./pages/paymentCreditCard";
+import { PaymentQrcode } from "./pages/payment-qr-code";
+import { PaymentCreditCard } from "./pages/payment-credit-card";
 import { theme } from "./utils/theme";
+import { PaymentCompleted } from "./pages/payment-completed";
 
 const router = createBrowserRouter([
   {
@@ -11,12 +12,16 @@ const router = createBrowserRouter([
     element:  <Payment />
   },
   {
-    path: "/payment/:parcelsNumber/qrcode",
+    path: "/payment/:installmentNumber/qrcode",
     element:  <PaymentQrcode />
   },
-    {
-    path: "/payment/:parcelsNumber/credit-card",
+  {
+    path: "/payment/:installmentNumber/credit-card",
     element:  <PaymentCreditCard />
+  },
+  {
+    path: "/payment/:installmentNumber/completed",
+    element:  <PaymentCompleted />
   },
   {
     path: "*",

@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import FooterImg from '../../assets/Footer.png'
+import FooterImg from '../../../assets/Footer.png'
 import './styles.css'
 
 type FooterProps = {

@@ -1,11 +1,11 @@
-import Logo from '../../assets/Logo.png'
+import Logo from '../../../assets/Logo.png'
 
 import { Typography } from '@mui/material'
 
 import './styles.css'
 
 type HeaderProps = {
-  title: string
+  title?: string
 }
 
 export const Header = ({ title }: HeaderProps) => {

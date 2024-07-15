@@ -1,11 +1,11 @@
 import { Box, Button, Container, FormControl, RadioGroup, Typography, Stack } from '@mui/material';
-import { Header } from '../components/header';
+import { Header } from '../components/layout/header';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { Charge, data } from '../utils/paymentMock';
-import { Footer } from '../components/footer';
+import { Charge, data } from '../utils/payment-mock';
+import { Footer } from '../components/layout/footer';
 import { NavLink } from 'react-router-dom';
 import { InputRadio } from '../components/inputRadio';
-import { formatNumberToBR } from '../utils/formatNumberToBR';
+import { formatNumberToBR } from '../utils/format-number-to-br';
 import { Banner } from '../components/banner';
 
 export const Payment = () => {
@@ -35,7 +35,7 @@ export const Payment = () => {
         >
           <InputRadio
             selectedValue={selectedPaymentMethod}
-            value={data.value.toString()}
+            value={'1'}
             isDetached 
             label={
               <Box>
@@ -62,7 +62,7 @@ export const Payment = () => {
               marginTop: '2rem' 
             }}
           >
-            {data.installments.map((installment, index) => (
+            {data.installments.filter(installment => installment.number !== 1).map((installment, index) => (
               <InputRadio 
                 key={installment.number}
                 label={
@@ -74,7 +74,7 @@ export const Payment = () => {
                   </div>
                 }
                 selectedValue={selectedPaymentMethod}
-                value={installment.value.toString()}
+                value={installment.number.toString()}
                 index={index}
                 maxInstallmentNumber={data.installments.length - 1} 
               />
@@ -85,7 +85,13 @@ export const Payment = () => {
 
       <Footer>
         <NavLink to={`/payment/${selectedPaymentMethod}/qrcode`}>
-          <Button variant='contained' color='secondary' fullWidth>Continuar</Button>
+          <Button 
+            variant='contained' 
+            color='secondary' 
+            fullWidth
+          >
+            Continuar
+          </Button>
         </NavLink>
       </Footer>
     </Container>

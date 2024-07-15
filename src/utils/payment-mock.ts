@@ -1,4 +1,4 @@
-interface Installment {
+export interface Installment {
   number: number;
   value: number;
 }
@@ -45,6 +45,10 @@ export const data: Charge = {
   },
   "value": 30500,
   "installments": [
+    {
+      "number": 1,
+      "value": 30500
+    }, 
     {
       "number": 2,
       "value": 30600
