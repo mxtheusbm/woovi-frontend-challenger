@@ -1,6 +1,6 @@
 export function formatExpiryDate(date: string) {
   date = date.replace(/\D/g, '');
-  
+
   if (date.length > 4) {
     date = date.slice(0, 4);
   }

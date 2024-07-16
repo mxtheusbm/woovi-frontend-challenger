@@ -1,6 +1,6 @@
 export function formatCardNumber(number: string) {
   number = number.replace(/\D/g, '');
-  
+
   if (number.length > 16) {
     number = number.slice(0, 16);
   }
