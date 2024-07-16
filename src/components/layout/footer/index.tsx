@@ -1,10 +1,10 @@
-import { ReactElement } from 'react'
-import FooterImg from '../../../assets/Footer.png'
-import './styles.css'
+import { ReactElement } from 'react';
+import FooterImg from '../../../assets/Footer.png';
+import './styles.css';
 
 type FooterProps = {
-  children: ReactElement
-}
+  children: ReactElement;
+};
 
 export const Footer = ({ children }: FooterProps) => {
   return (
@@ -12,5 +12,5 @@ export const Footer = ({ children }: FooterProps) => {
       <div>{children}</div>
       <img src={FooterImg} alt="Pagamento 100% seguro via: Woovi" />
     </footer>
-  )
-}
+  );
+};

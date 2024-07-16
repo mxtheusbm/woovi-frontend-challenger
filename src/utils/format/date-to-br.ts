@@ -8,4 +8,4 @@ export const formatDate = (dateStr: string) => {
   const minutes = String(date.getUTCMinutes()).padStart(2, '0');
 
   return `${day}/${month}/${year} - ${hours}:${minutes}`;
-}
+};
